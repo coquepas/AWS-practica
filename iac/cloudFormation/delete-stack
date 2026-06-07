@@ -1,0 +1,8 @@
+#! /usr/bin/env bash
+
+echo  '--- delete the stack in cloud formation ---'
+
+STACK_NAME='cloudformation-with-S3-simple'
+
+aws cloudformation delete-stack\
+    --stack-name $STACK_NAME \
