@@ -1,0 +1,42 @@
+#! /usr/bin/env bash
+
+echo'---creando unos files random y luego sync---'
+
+# Sale del script si algun resultado devuelve un error
+set -e
+
+#Comprobando que hay bucketname
+if [ -z "$1" ]; then
+    echo "Falta la variable nombre del bucket..."
+    exit 1
+fi
+BUCKET_NAME=$1
+
+#Comprobando que hay filename
+if [ -z "$2" ]; then
+    echo "Falta la variable para el nombre de fichero..."
+    exit 1
+fi
+FILENAME_SEED=$2
+
+OUTPUT_DIR='/tmp/s3-bash-scripts'
+
+# Borra el directorio solo si existe
+if [ -d "$OUTPUT_DIR" ]; then
+    rm -r $OUTPUT_DIR
+fi
+
+mkdir -p $OUTPUT_DIR
+
+
+NUM_FILES=$((RANDOM % 6 + 5))
+
+for ((i=1; i<=$NUM_FILES; i++)); do
+    FILENAME="$OUTPUT_DIR/${FILENAME_SEED}_$i.txt"
+    echo "Creando el archivo $FILENAME..."
+
+    #genera datos random y los escribe en el fichero
+    dd if=/dev/urandom of=$FILENAME bs=1024 count=$((RANDOM % 1024 + 1)) 2> /dev/null
+done
+
+aws s3 sync $OUTPUT_DIR s3://$BUCKET_NAME/files

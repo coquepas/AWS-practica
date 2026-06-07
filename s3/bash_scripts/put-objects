@@ -1,0 +1,32 @@
+#! /usr/bin/env bash
+
+echo '---put objects into bucket!!---'
+
+# Sale del script si algun resultado devuelve un error
+set -e
+
+#Comprobando que hay bucketname
+if [ -z "$1" ]; then
+    echo "Falta la variable nombre del bucket..."
+    exit 1
+fi
+BUCKET_NAME=$1
+
+#Comprobando que hay filename
+if [ -z "$2" ]; then
+    echo "Falta la variable para el nombre de fichero..."
+    exit 1
+fi
+FILENAME=$2
+
+#recuperamos el nombre del archivo sin la ruta
+KEY=$(basename $abs_path)
+
+
+
+
+aws s3api put-object \
+ --bucket $BUCKET_NAME \
+ --key files/$KEY \
+ --body $FILENAME  \
+ --content-type text/plain 

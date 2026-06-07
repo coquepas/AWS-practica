@@ -1,0 +1,17 @@
+#! /usr/bin/env bash
+
+aws s3api list-buckets --query "Buckets[].Name" --output text
+
+OUTPUT_DIR='tmp/bash_scripts'
+
+echo "Borrando un bucket de S3..."
+
+if [ -z "$1" ]; then
+    echo "Falta la variable nombre del bucket..."
+    exit 1
+fi
+
+BUCKET_NAME=$1
+
+aws s3api delete-bucket \
+ --bucket $BUCKET_NAME \

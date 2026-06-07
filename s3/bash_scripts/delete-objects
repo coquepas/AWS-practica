@@ -1,0 +1,27 @@
+#! /usr/bin/env bash
+
+echo '---delete objects del bucket!!---'
+
+# Sale del script si algun resultado devuelve un error
+set -e
+
+#Comprobando que hay bucketname
+if [ -z "$1" ]; then
+    echo "Falta la variable nombre del bucket..."
+    exit 1
+fi
+BUCKET_NAME=$1
+
+
+
+DELETE_JSON=$(aws s3api list-objects-v2 \
+ --bucket $BUCKET_NAME \
+ --query 'Contents[].Key' \
+ | jq -n '{Objects: [inputs | .[] | {Key: .}]}' )
+
+# echo "DELETE_JSON: $DELETE_JSON"
+
+# realmente el delete va con un file://delete.json, pero esto mola más y no creamos ningún fichero extra.
+aws s3api delete-objects \
+ --bucket $BUCKET_NAME \
+ --delete "$(echo "$DELETE_JSON")"
