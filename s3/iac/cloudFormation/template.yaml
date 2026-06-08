@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: 2010-09-09
 Resources:
-  S3Bucket:
+  S3BucketCoque:
     Type: AWS::S3::Bucket
     #el nombre se genera solo en este caso si no se especifica.
     

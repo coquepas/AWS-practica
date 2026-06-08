@@ -9,3 +9,6 @@ export AWS_DEFAULT_REGION=eu-west-3
 
 # Execute scripts (desde git bash)
 bash sync.sh
+
+# CDK 
+cdk bootstrap
