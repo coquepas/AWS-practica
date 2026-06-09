@@ -1,0 +1,11 @@
+name: CoquePulumi
+description: minimal example set up
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-python
