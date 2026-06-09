@@ -12,3 +12,8 @@ bash sync.sh
 
 # CDK 
 cdk bootstrap
+cdk deploy
+cdk destroy
+
+# Pulumi
+pulumi new -l (to list all the options)
